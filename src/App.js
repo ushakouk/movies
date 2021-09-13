@@ -1,7 +1,9 @@
+import React from 'react';
+import './App.css';
 
 function App() {
   return (
-    <div>Hello world</div>
+    <div className="some_class">Hello world</div>
   );
 }
 
