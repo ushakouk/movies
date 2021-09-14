@@ -1,23 +1,29 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const devtool = 'source-map';
 const optimization = {
-  splitChunks: { chunks: 'all' }
+  splitChunks: { chunks: 'all' },
+  minimizer: [
+    '...',
+    new CssMinimizerPlugin(),
+  ]
 };
 const configs = {
   entry: './src/index.js',
 
   output: {
-    filename: '[name].bundle.js',
+    filename: '[name].js',
+    chunkFilename: '[id].js',
     path: path.join(__dirname, 'built'),
   },
 
   resolve: {
     modules: [path.join(__dirname, './src'), 'node_modules'],
-    extensions: ['.js']
+    extensions: ['.js', '.jsx']
   },
 
   plugins: [
@@ -29,24 +35,26 @@ const configs = {
     }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
-      chunkFilename: '[name].css'
+      chunkFilename: '[id].css'
     })
   ],
 
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader'
         }
       },
       {
-        test: /\.css$/,
+        test: /\.s?css$/,
         use: [
           { loader: MiniCssExtractPlugin.loader },
-          'css-loader'
+          'css-loader',
+          'sass-loader',
+          'postcss-loader'
         ],
       },
       {
