@@ -3,7 +3,7 @@ import './content.scss';
 
 function Content(props) {
     return(
-        <div>Content</div>
+        <div className="content">Content</div>
     )
 }
 

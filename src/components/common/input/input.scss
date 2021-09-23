@@ -1,0 +1,28 @@
+.input {
+  background-color: #323232F2;
+  border-radius: 4px;
+  border-color: #323232F2;
+  border-style: solid;
+  color: #FFFFFF;
+  font-size: 20px;
+  padding: 16px;
+  margin: 5px 0;
+  display: block;
+}
+
+.input.wide {
+  width: 500px;
+}
+
+.input.super-wide {
+  width: 700px;
+  display: inline;
+}
+
+.label {
+  color: #F65261;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+  margin: 20px 5px 0;
+}

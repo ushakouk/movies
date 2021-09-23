@@ -67,6 +67,10 @@ const configs = {
           }
         ]
       },
+      {
+        test: /\.png$/i,
+        type: 'asset/resource',
+      },
     ]
   }
 }

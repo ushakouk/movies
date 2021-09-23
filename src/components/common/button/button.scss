@@ -1,0 +1,31 @@
+.button {
+  border-radius: 4px;
+  padding: 16px 48px;
+  margin: 5px;
+  font-size: 20px;
+  float: right;
+  cursor: pointer;
+  background-color: #606060AD;
+  color: #F65261;
+  border-style: solid;
+  border-color: transparent;
+  width: fit-content;
+}
+
+.button:hover {
+  opacity: 0.8;
+}
+
+.button.primary {
+  background-color: #F65261;
+  color: white;
+}
+
+.button.negative {
+  background-color: transparent;
+  border-color: #F65261;
+}
+
+.button.small {
+  padding: 8px 16px;
+}

@@ -4,34 +4,40 @@ import Login from './login/Login';
 import ErrorPage from './error/ErrorPage';
 import './App.scss';
 
-const UNAUTHORIZED = 'unauthorized';
-const AUTHORIZED = 'authorized';
-const ERROR = 'error';
-
 class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = UNAUTHORIZED;
+    this.state = {
+      isAuth: false,
+      hasError: false
+    };
   }
 
   static getDerivedStateFromError(error) {
-    return ERROR;
+    return { hasError: true };
   }
 
   componentDidCatch(error, errorInfo) {
     //log(error, errorInfo);
   }
 
+  login(login, password) {
+    this.setState({ isAuth: true });
+  }
+
+  logout() {
+    this.setState({ isAuth: false });
+  }
+
   render() {
-    switch (this.state) {
-      case AUTHORIZED:
-        return <Home />
-      case UNAUTHORIZED:
-        return <Login />
-      case ERROR:
-      default:
-        return <ErrorPage />
+    const { hasError, isAuth } = this.state;
+    if (!hasError) {
+      return isAuth
+        ? <Home logout={() => this.logout()}/>
+        : <Login login={(login, password) => this.login(login, password)}/>
+    } else {
+      return <ErrorPage />
     }
   }
 }
