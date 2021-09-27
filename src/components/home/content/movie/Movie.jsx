@@ -1,17 +1,23 @@
 import React from 'react';
 import ContextMenu from './contextMenu/ContextMenu';
+import image from '../../../../img/no_image.png';
 import './movie.scss';
 
-function Movie({ img, genre, name, year }) {
+function Movie({ poster_path, genres, title, release_date }) {
+
+  function parseYear(date) {
+    return date.substr(0, 4)
+  }
+
   return (
     <div className="movie_details">
-      <ContextMenu />
-      <div className="image"></div>
+      <img src={poster_path} className="image" onError={(e) => {e.target.onerror = null; e.target.src=image}}/>
       <div className="info_group">
-        <div className="name">{name}</div>
-        <div className="year">{year}</div>
+        <div className="name">{title}</div>
+        <div className="year">{parseYear(release_date)}</div>
       </div>
-      <div className="genre">{genre}</div>
+      <div className="genre">{genres.join(', ')}</div>
+      <ContextMenu />
     </div>
   )
 }

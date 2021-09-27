@@ -14,3 +14,14 @@ body {
     display: flex;
     flex-direction: column;
 }
+
+.arrow-down {
+    width: 0px;
+    height: 0px;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid #F65261;
+    position: absolute;
+    right: 14px;
+    top: 14px;
+}

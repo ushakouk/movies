@@ -3,13 +3,12 @@
   width: fit-content;
   margin-top: 24px;
   cursor: pointer;
+  position: relative;
 }
 
 .image {
-  height: 450px;
-  width: 320px;
-  content: "";
-  background-color: white;
+  max-height: 450px;
+  max-width: 320px;
 }
 
 .info_group {
@@ -38,6 +37,6 @@
   margin-top: 8px;
 }
 
-.movie_details:hover .context_menu__button {
-  display: block;
-}
+.movie_details:hover .context_menu__button:after {
+  visibility: visible;
+} 

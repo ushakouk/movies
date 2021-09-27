@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import './navigation.scss';
 import Selector from './selector/Selector';
-import Sort from './sort/Sort';
+import Select from '../../../common/select/Select';
 
 const STYLES = ['ALL', 'DOCUMENTARY', 'COMEDY', 'HORROR', 'CRIME'];
+const SORT_TYPES = [
+  { name: "RELEASE DATE", value: "release_date" },
+  { name: "GENRE", value: "genre" },
+  { name: "SMTH ELSE", value: "smth" }
+]
 
 function Navigation() {
 
@@ -14,7 +19,11 @@ function Navigation() {
       {STYLES.map((style, index) =>
         <Selector key={index} name={style} selected={selected} select={(val) => setSelected(val)}/>
       )}
-      <Sort />
+      <Select 
+        label="SORT BY"
+        options={SORT_TYPES}
+        className="sort"
+      />
     </div>
   )
 }
