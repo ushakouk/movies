@@ -1,0 +1,20 @@
+.selector {
+  color: white;
+  display: inline;
+  margin-right: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  position: relative;
+}
+
+.selector.selected:after {
+  display: block;
+    width: 100%;
+    height: 2px;
+    content: "";
+    background-color: #F65261;
+    position: absolute;
+    bottom: -21px;
+    left: 0;
+    z-index: 999;
+}

@@ -28,12 +28,12 @@ $ npm run build:prod
 <p>Start Dev-Server on dev*</p>
 
 ```sh
-$ npm start:dev
+$ npm run start:dev
 ```
 
 <p>Start Dev-Server on prod*</p>
 
 ```sh
-$ npm start:prod
+$ npm run start:prod
 ```
 **dev server starts with Hot Module Replacement feature and open browser after it had been started*

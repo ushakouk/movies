@@ -1,0 +1,42 @@
+.movie_details {
+  color: #ffffffb9;
+  width: fit-content;
+  margin-top: 24px;
+  cursor: pointer;
+  position: relative;
+}
+
+.image {
+  max-height: 450px;
+  max-width: 320px;
+}
+
+.info_group {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.name {
+  font-size: 18px;
+}
+
+.genre, .year {
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.year {
+  border: 1px solid #979797;
+  border-radius: 4px;
+  padding: 2px 8px;
+}
+
+.genre {
+  margin-top: 8px;
+}
+
+.movie_details:hover .context_menu__button:after {
+  visibility: visible;
+} 

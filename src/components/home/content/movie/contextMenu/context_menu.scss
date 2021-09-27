@@ -1,0 +1,37 @@
+.context_menu {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+}
+
+.context_menu__button:after {
+  content: '\2807';
+  background-color: #2A202D;
+  color: white;
+  font-size: 24px;
+  border-radius: 16px;
+  padding: 0 4px 0 10px;
+  position: relative;
+  visibility: hidden;
+}
+
+
+.context_menu__content {
+  position: absolute;
+  background-color: #232323EA;
+  padding: 12px 0;
+  min-width: 150px;
+  right: 0;
+  top: 0;
+  white-space: nowrap;
+}
+
+.menu-item {
+  padding: 5px 20px;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.menu-item:hover {
+  background-color: #F65261;
+}

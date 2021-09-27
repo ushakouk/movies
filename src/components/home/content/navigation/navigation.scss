@@ -1,0 +1,20 @@
+.navigation {
+  padding: 20px 0;
+  position: relative;
+}
+
+.navigation:after {
+  display: block;
+  width: 100%;
+  height: 2px;
+  content: "";
+  background-color: #424242;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.sort {
+  color: #ffffff;
+  float: right;
+}
