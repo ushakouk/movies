@@ -3,13 +3,13 @@ import './top.scss';
 import Logo from '../../../common/logo/Logo';
 import Button from '../../../common/button/Button';
 
-function Top({ logout }) {
+function Top({ addMovie, logout }) {
   return(
       <div className="top">
         <Logo />
         <div className="top__buttons">
           <Button style="negative small" onClick={() => logout()}>LOG OUT</Button>
-          <Button style="small">+ ADD MOVIE</Button>
+          <Button style="small" onClick={() => addMovie()}>+ ADD MOVIE</Button>
         </div>
       </div>
   )
