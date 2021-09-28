@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './context_menu.scss';
 
-function ContextMenu() {
+function ContextMenu({ onEdit, onDelete }) {
 
   const [expanded, setExpanded] = useState(false);
 
@@ -23,8 +23,8 @@ function ContextMenu() {
       }
       {expanded &&
         <div className="context_menu__content">
-          <div className="menu-item">Edit</div>
-          <div className="menu-item">Delete</div>
+          <div className="menu-item" onClick={onEdit}>Edit</div>
+          <div className="menu-item" onClick={onDelete}>Delete</div>
         </div>
       }
     </div>

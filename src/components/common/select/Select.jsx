@@ -31,7 +31,9 @@ function Select({ label, options, onChange, className }) {
 
   return (
     <div className={"select-form " + (className ? className : "")}>
-      {label && <div className="select__label">{label}</div>}
+      {label &&
+        <div className="select__label">{label}</div>
+      }
       <div className="select" onClick={(e) => expandMenu(e)}>
         <div className="select__selected" >{selected.name}</div><span className="arrow-down"/>
         {expanded &&
