@@ -33,8 +33,11 @@ function Home({ logout }) {
   function submitMovie(movie) {
     if (!movie.id) {
       setState(STATES.MOVIE_IS_CREATED);
+      setMovies([...movies, movie]);
     } else {
       setState(STATES.DEFAULT);
+      const found = movies.find(mov => mov.id === movie.id);
+      Object.assign(found, movie);
     }
   }
 
