@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Header from './header/Header';
 import Content from './content/Content';
 import Footer from './footer/Footer';
 import EditMovie from './modal/EditMovie';
 import DeleteMovie from './modal/DeleteMovie';
+import Success from './modal/Success';
 import { getMovies } from '../../api/requests';
 import './home.scss';
-import Success from './modal/Success';
 
 const STATES = {
   ADD_MOVIE: {
-    title: 'ADD MOVIE',
-    movie: {}
+    title: 'ADD MOVIE'
   },
   EDIT_MOVIE: {
     title: 'EDIT MOVIE'
@@ -29,15 +28,14 @@ const STATES = {
 
 function Home({ logout }) {
   const [state, setState] = useState(STATES.DEFAULT);
-  const [movies, setMovies] = useState([]);
-
-  useEffect(() => {
-    setMovies(getMovies());
-  }, []);
+  const [movies, setMovies] = useState(getMovies());
 
   function submitMovie(movie) {
-    setState(STATES.DEFAULT);
-    setTimeout(() => setState(STATES.MOVIE_IS_CREATED), 1000)
+    if (!movie.id) {
+      setState(STATES.MOVIE_IS_CREATED);
+    } else {
+      setState(STATES.DEFAULT);
+    }
   }
 
   return (
@@ -49,10 +47,18 @@ function Home({ logout }) {
         deleteMovie={(movie) => setState({ ...STATES.DELETE_MOVIE, movie })}
       />
       {(state.title == STATES.ADD_MOVIE.title || state.title == STATES.EDIT_MOVIE.title) &&
-        <EditMovie movie={state.movie} close={() => setState(STATES.DEFAULT)} submit={(movie) => submitMovie(movie)}/>
+        <EditMovie
+          movie={state.movie}
+          submit={(movie) => submitMovie(movie)}
+          close={() => setState(STATES.DEFAULT)}
+        />
       }
       {state.title == STATES.DELETE_MOVIE.title &&
-        <DeleteMovie movie={state.movie} confirm={(id) => setMovies(movies.filter(mov => mov.id != id))} close={() => setState(STATES.DEFAULT)} />
+        <DeleteMovie
+          movie={state.movie}
+          confirm={(id) => setMovies(movies.filter(mov => mov.id != id))}
+          close={() => setState(STATES.DEFAULT)}
+        />
       }
       {state.title == STATES.MOVIE_IS_CREATED.title &&
         <Success close={() => setState(STATES.DEFAULT)} />

@@ -10,11 +10,21 @@
   background: rgba(0,0,0, 0.5);
 }
 
+.close-dialog-icon {
+  top: 20px;
+  right: 20px;
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  cursor: pointer;
+}
+
 .dialog__content {
   padding: 60px;
   background: #232323;
   border-radius: 4px;
   min-width: 600px;
+  position: relative;
 }
 
 .dialog__content.centered {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Dialog from '../../common/dialog/Dialog';
 import Title from '../../common/title/Title';
 import Input from '../../common/input/Input';
@@ -6,7 +6,8 @@ import Button from '../../common/button/Button';
 import TextArea from '../../common/textarea/TextArea';
 import MultiSelect from '../../common/multiselect/MultiSelect';
 
-const DEFAULT_STATE = {
+const GENRES = ["Drama", "Romance", "Fantasy", "Adventure", "Science Fiction"]
+const DEFAULT_MOVIE_STATE = {
   title: "",
   release_date: "",
   poster_path: "",
@@ -16,40 +17,85 @@ const DEFAULT_STATE = {
   overview: ""
 }
 
-const GENRES = ["Drama", "Romance", "Fantasy", "Adventure", "Science Fiction"]
+function EditMovie(props) {
+  const [movie, setMovie] = useState(prepareMovie());
 
-function EditMovie({ movie, close, submit }) {
-  const [state, setState] = useState(DEFAULT_STATE);
-
-  useEffect(() => {
-    if (movie.id) {
-      setState({ ...movie, runtime: parseTime(movie.runtime) })
-    }
-  }, [])
+  function prepareMovie() {
+    return props.movie
+      ? { ...props.movie, runtime: parseTime(props.movie.runtime) }
+      : DEFAULT_MOVIE_STATE
+  }
 
   function parseTime(minutes) {
-    return Math.trunc(minutes/60) + "h " + minutes%60 + "min"
+    return Math.trunc(minutes / 60) + "h " + minutes % 60 + "min"
   }
 
   return (
-    <Dialog close={() => close()}>
-      <Title>{(movie.id ? 'EDIT' : 'ADD') + ' MOVIE'}</Title>
+    <Dialog close={() => props.close()}>
+      <Title>{(props.movie ? 'EDIT' : 'ADD') + ' MOVIE'}</Title>
       <div className="row">
-        <Input label="TITLE" size="wide" value={state.title} type="text" placeholder="Title" onChange={e => setState({ ...state, title: e.target.value })} />
-        <Input label="RELEASE DATE" size="small" value={state.release_date} type="date" placeholder="Select Date" onChange={e => setState({ ...state, release_date: e.target.value })} />
+        <Input
+          label="TITLE"
+          size="wide"
+          value={movie.title}
+          type="text"
+          placeholder="Title"
+          onChange={e => setMovie({ ...movie, title: e.target.value })}
+        />
+        <Input
+          label="RELEASE DATE"
+          size="small"
+          value={movie.release_date}
+          type="date"
+          placeholder="Select Date"
+          onChange={e => setMovie({ ...movie, release_date: e.target.value })}
+        />
       </div>
       <div className="row">
-        <Input label="MOVIE URL" size="wide" value={state.poster_path} type="url" placeholder="https://" onChange={e => setState({ ...state, poster_path: e.target.value })} />
-        <Input label="RATING" size="small" value={state.vote_average} type="number" placeholder="7.8" onChange={e => setState({ ...state, vote_average: e.target.value })} />
+        <Input
+          label="MOVIE URL"
+          size="wide"
+          value={movie.poster_path}
+          type="url"
+          placeholder="https://"
+          onChange={e => setMovie({ ...movie, poster_path: e.target.value })}
+        />
+        <Input
+          label="RATING"
+          size="small"
+          value={movie.vote_average}
+          type="number"
+          placeholder="7.8"
+          onChange={e => setMovie({ ...movie, vote_average: e.target.value })}
+        />
       </div>
       <div className="row">
-        <MultiSelect label="GENRE" values={state.genres} options={GENRES} placeholder="Select Genre" onChange={values => setState({ ...state, genres: values })} />
-        <Input label="RUNTIME" size="small" value={state.runtime} type="text" placeholder="minutes" onChange={e => setState({ ...state, runtime: e.target.value })} />
+        <MultiSelect
+          label="GENRE"
+          values={movie.genres}
+          options={GENRES}
+          placeholder="Select Genre"
+          onChange={values => setMovie({ ...movie, genres: values })}
+        />
+        <Input
+          label="RUNTIME"
+          size="small"
+          value={movie.runtime}
+          type="text"
+          placeholder="minutes"
+          onChange={e => setMovie({ ...movie, runtime: e.target.value })}
+        />
       </div>
-      <TextArea label="OVERVIEW" value={state.overview} placeholder="Movie description" rows="7" onChange={e => setState({ ...state, overview: e.target.value })} />
+      <TextArea
+        label="OVERVIEW"
+        value={movie.overview}
+        placeholder="Movie description"
+        rows="7"
+        onChange={e => setMovie({ ...movie, overview: e.target.value })}
+      />
 
-      <Button style="primary" onClick={() => submit()}>SUBMIT</Button>
-      <Button style="negative" onClick={() => setState(movie.id ? movie : DEFAULT_STATE)}>RESET</Button>
+      <Button style="primary" onClick={() => props.submit(movie)}>SUBMIT</Button>
+      <Button style="negative" onClick={() => setMovie(prepareMovie())}>RESET</Button>
     </Dialog>
   )
 }

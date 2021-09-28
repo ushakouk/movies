@@ -16,6 +16,7 @@ function DeleteMovie({ movie, close, confirm }) {
       <Title>DELETE MOVIE</Title>
       <div className="message">Are you sure you want to delete this movie?</div>
       <Button onClick={onConfirm} style="primary">CONFIRM</Button>
+      <Button onClick={close} style="negative">CANCEL</Button>
     </Dialog>
   )
 }
