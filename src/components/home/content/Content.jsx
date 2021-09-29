@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './content.scss';
 import Counter from './counter/Counter';
 import Movie from './movie/Movie';

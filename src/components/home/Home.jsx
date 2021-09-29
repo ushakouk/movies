@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import Header from './header/Header';
 import Content from './content/Content';
 import Footer from './footer/Footer';
@@ -8,65 +8,111 @@ import Success from './modal/Success';
 import { getMovies } from '../../api/requests';
 import './home.scss';
 
-const STATES = {
-  ADD_MOVIE: {
-    title: 'ADD MOVIE'
-  },
-  EDIT_MOVIE: {
-    title: 'EDIT MOVIE'
-  },
-  DELETE_MOVIE: {
-    title: 'DELETE MOVIE'
-  },
-  MOVIE_IS_CREATED: {
-    title: 'MOVIE IS CREATED'
-  },
-  DEFAULT: {
-    title: 'DEFAULT'
-  }
+const ACTIONS = {
+  INIT_MOVIES: "initMovies",
+  TO_SEARCH_MODE: "toSearchMode",
+  SHOW_MOVIE_DETAILS: "showMovieDetails",
+  ADD_MOVIE: "addMovie",
+  EDIT_MOVIE: "editMovie",
+  SUBMIT_MOVIE: "submitMovie",
+  DELETE_MOVIE: "deleteMovie",
+  CONFIRM_DELETE_MOVIE: "confirmDeleteMovie",
+  CLOSE_MODAL: "closeModal"
+}
+
+const MODES = {
+  SEARCH_MOVIES: 'searchMovies',
+  VIEW_MOVIE_DETAILS: 'viewMovieDetails'
 };
 
-function Home({ logout }) {
-  const [state, setState] = useState(STATES.DEFAULT);
-  const [movies, setMovies] = useState(getMovies());
+const MODALS = {
+  CREATE_OR_EDIT_MOVIE: 'createOrEditMovie',
+  CONFIRM_DELETE_MOVIE: 'confirmDelete',
+  NOTIFICATION: 'notification'
+}
 
-  function submitMovie(movie) {
-    if (!movie.id) {
-      setState(STATES.MOVIE_IS_CREATED);
-      setMovies([...movies, movie]);
-    } else {
-      setState(STATES.DEFAULT);
-      const found = movies.find(mov => mov.id === movie.id);
-      Object.assign(found, movie);
+const initialState = {
+  mode: MODES.SEARCH_MOVIES,
+  modal: null,
+  movies: [],
+  movieDetails: null,
+  modalMovieDetails: null
+}
+
+function reducer(state, action) {
+  switch (action.type) {
+    case ACTIONS.INIT_MOVIES:
+      return { ...state, movies: getMovies() };
+    case ACTIONS.TO_SEARCH_MODE:
+      return { ...state, mode: MODES.SEARCH_MOVIES };
+    case ACTIONS.VIEW_MOVIE_DETAILS:
+      return { ...state, mode: MODES.VIEW_MOVIE_DETAILS, movieDetails: action.payload };
+    case ACTIONS.ADD_MOVIE:
+      return { ...state, modal: MODALS.CREATE_OR_EDIT_MOVIE };
+    case ACTIONS.EDIT_MOVIE:
+      return { ...state, modal: MODALS.CREATE_OR_EDIT_MOVIE, modalMovieDetails: action.payload };
+    case ACTIONS.SUBMIT_MOVIE:
+      const movie = action.payload;
+      if (movie.id) {
+        const found = state.movies.find(mov => mov.id === movie.id);
+        Object.assign(found, movie);
+      } else {
+        state.movies.push(movie);
+      }
+      return { ...state, modal: null, modalMovieDetails: null, movies: [...state.movies] };
+    case ACTIONS.DELETE_MOVIE:
+      return { ...state, modal: MODALS.CONFIRM_DELETE_MOVIE, modalMovieDetails: action.payload };
+    case ACTIONS.CONFIRM_DELETE_MOVIE:
+      return { ...state, modal: null, movies: [...state.movies.filter(movie => movie.id != action.payload)] };
+    case ACTIONS.CLOSE_MODAL:
+      return { ...state, modal: null, modalMovieDetails: null };
+    default:
+      throw new Error();
+  }
+}
+
+function Home({ logout }) {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    dispatch({ type: ACTIONS.INIT_MOVIES })
+  }, [])
+
+  function getModal(modal) {
+    switch (modal) {
+      case MODALS.CREATE_OR_EDIT_MOVIE:
+        return (
+          <EditMovie
+            movie={state.modalMovieDetails}
+            submit={(movie) => dispatch({ type: ACTIONS.SUBMIT_MOVIE, payload: movie })}
+            close={() => dispatch({ type: ACTIONS.CLOSE_MODAL })}
+          />)
+      case MODALS.CONFIRM_DELETE_MOVIE:
+        return (
+          <DeleteMovie
+            movie={state.modalMovieDetails}
+            confirm={(id) => dispatch({ type: ACTIONS.CONFIRM_DELETE_MOVIE, payload: id })}
+            close={() => dispatch({ type: ACTIONS.CLOSE_MODAL })}
+          />)
+      case MODALS.NOTIFICATION:
+        return (
+          <Success close={() => dispatch({ type: ACTIONS.CLOSE_MODAL })} />
+        )
     }
   }
 
   return (
     <React.Fragment>
-      <Header addMovie={() => setState(STATES.ADD_MOVIE)} logout={() => logout()} />
+      <Header addMovie={() => dispatch({ type: ACTIONS.ADD_MOVIE })} logout={() => logout()} />
       <Content
-        movies={movies}
-        editMovie={(movie) => setState({ ...STATES.EDIT_MOVIE, movie })}
-        deleteMovie={(movie) => setState({ ...STATES.DELETE_MOVIE, movie })}
+        movies={state.movies}
+        editMovie={(movie) => dispatch({ type: ACTIONS.EDIT_MOVIE, payload: movie })}
+        deleteMovie={(movie) => dispatch({ type: ACTIONS.DELETE_MOVIE, payload: movie })}
       />
-      {(state.title == STATES.ADD_MOVIE.title || state.title == STATES.EDIT_MOVIE.title) &&
-        <EditMovie
-          movie={state.movie}
-          submit={(movie) => submitMovie(movie)}
-          close={() => setState(STATES.DEFAULT)}
-        />
-      }
-      {state.title == STATES.DELETE_MOVIE.title &&
-        <DeleteMovie
-          movie={state.movie}
-          confirm={(id) => setMovies(movies.filter(mov => mov.id != id))}
-          close={() => setState(STATES.DEFAULT)}
-        />
-      }
-      {state.title == STATES.MOVIE_IS_CREATED.title &&
-        <Success close={() => setState(STATES.DEFAULT)} />
-      }
       <Footer />
+      {state.modal &&
+        getModal(state.modal)
+      }
     </React.Fragment>
   )
 }
