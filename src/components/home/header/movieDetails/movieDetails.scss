@@ -1,0 +1,55 @@
+.movie-details {
+  display: flex;
+  flex-direction: row;
+  margin: 20px 0;
+}
+
+.movie-details_block {
+  margin-left: 60px;
+}
+
+.details_row {
+  width: fit-content;
+  display:flex;
+  flex-direction: row;
+}
+
+.details_title {
+  color: white;
+  font-size: 40px;
+  line-height: 50px;
+  font-weight: 300;
+  display: inline;
+}
+
+.details_genre {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.466);
+  margin-top: 10px;
+}
+
+.details_raiting {
+  display: inline;
+  font-size: 20px;
+  color: white;
+  border: 1px solid;
+  padding: 16px;
+  border-radius: 32px;
+  margin-top: -5px;
+  margin-left: 20px;
+}
+
+.details_year,
+.details_runtime {
+  color: #F65261;
+  font-size: 24px;
+  display: inline;
+  margin: 20px 20px 20px 0;
+}
+
+
+.details_overview {
+  color: #ffffff85;
+  font-size: 20px;
+  line-height: 24px;
+}

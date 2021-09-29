@@ -7,6 +7,8 @@ import DeleteMovie from './modal/DeleteMovie';
 import Success from './modal/Success';
 import { getMovies } from '../../api/requests';
 import './home.scss';
+import Search from './header/search/Search';
+import MovieDetails from './header/movieDetails/MovieDetails';
 
 const ACTIONS = {
   INIT_MOVIES: "initMovies",
@@ -22,7 +24,7 @@ const ACTIONS = {
 
 const MODES = {
   SEARCH_MOVIES: 'searchMovies',
-  VIEW_MOVIE_DETAILS: 'viewMovieDetails'
+  MOVIE_DETAILS: 'viewMovieDetails'
 };
 
 const MODALS = {
@@ -45,8 +47,8 @@ function reducer(state, action) {
       return { ...state, movies: getMovies() };
     case ACTIONS.TO_SEARCH_MODE:
       return { ...state, mode: MODES.SEARCH_MOVIES };
-    case ACTIONS.VIEW_MOVIE_DETAILS:
-      return { ...state, mode: MODES.VIEW_MOVIE_DETAILS, movieDetails: action.payload };
+    case ACTIONS.SHOW_MOVIE_DETAILS:
+      return { ...state, mode: MODES.MOVIE_DETAILS, movieDetails: action.payload };
     case ACTIONS.ADD_MOVIE:
       return { ...state, modal: MODALS.CREATE_OR_EDIT_MOVIE };
     case ACTIONS.EDIT_MOVIE:
@@ -103,11 +105,22 @@ function Home({ logout }) {
 
   return (
     <React.Fragment>
-      <Header addMovie={() => dispatch({ type: ACTIONS.ADD_MOVIE })} logout={() => logout()} />
+      <Header
+        isViewMode={state.mode === MODES.MOVIE_DETAILS}
+        closeViewMode={() => dispatch({ type: ACTIONS.TO_SEARCH_MODE })}
+        addMovie={() => dispatch({ type: ACTIONS.ADD_MOVIE })}
+        logout={() => logout()}
+      >
+        {state.mode === MODES.MOVIE_DETAILS  
+          ? <MovieDetails movie={state.movieDetails} />
+          : <Search />
+        }
+      </Header>
       <Content
         movies={state.movies}
         editMovie={(movie) => dispatch({ type: ACTIONS.EDIT_MOVIE, payload: movie })}
         deleteMovie={(movie) => dispatch({ type: ACTIONS.DELETE_MOVIE, payload: movie })}
+        showMovieDetails={(movie) => dispatch({ type: ACTIONS.SHOW_MOVIE_DETAILS, payload: movie })}
       />
       <Footer />
       {state.modal &&
