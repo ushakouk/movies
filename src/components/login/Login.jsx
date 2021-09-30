@@ -17,7 +17,7 @@ function Login({ login }) {
 
   return (
     <div className="login">
-      <Dialog>
+      <Dialog style="short">
         <Title>LOG IN</Title>
         <Input label="USER ID:" size="wide" value={name} type="text" placeholder="Login" onChange={e => setName(e.target.value)} />
         <Input label="PASSWORD:" size="wide" value={password} type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />

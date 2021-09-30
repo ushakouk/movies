@@ -30,3 +30,7 @@
 .dialog__content.centered {
   text-align: center;
 }
+
+.dialog__content.short {
+  min-width: 540px;
+}
