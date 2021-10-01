@@ -1,71 +1,64 @@
-import React, { useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import Header from './header/Header';
 import Content from './content/Content';
 import Footer from './footer/Footer';
 import EditMovie from './modal/EditMovie';
 import DeleteMovie from './modal/DeleteMovie';
 import Success from './modal/Success';
+import Search from './header/search/Search';
+import MovieDetails from './header/movieDetails/MovieDetails';
+import Loader from '../common/loader/Loader';
+import ErrorPage from '../error/error_page/ErrorPage';
+import { initialState, reducer, MODALS, MODES } from './reducer/reducer';
+import { setDispatcher, setMovies, showMovieDetails, searchMode, addMovie, editMovie, submitMovie, deleteMovie, confirmDeleteMovie, closeModal } from './reducer/actions';
+import { useFetching } from '../../hooks/useFetching';
 import { getMovies } from '../../api/requests';
 import './home.scss';
 
-const STATES = {
-  ADD_MOVIE: {
-    title: 'ADD MOVIE'
-  },
-  EDIT_MOVIE: {
-    title: 'EDIT MOVIE'
-  },
-  DELETE_MOVIE: {
-    title: 'DELETE MOVIE'
-  },
-  MOVIE_IS_CREATED: {
-    title: 'MOVIE IS CREATED'
-  },
-  DEFAULT: {
-    title: 'DEFAULT'
-  }
-};
-
 function Home({ logout }) {
-  const [state, setState] = useState(STATES.DEFAULT);
-  const [movies, setMovies] = useState(getMovies());
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const [fetch, isLoading, error] = useFetching();
 
-  function submitMovie(movie) {
-    if (!movie.id) {
-      setState(STATES.MOVIE_IS_CREATED);
-    } else {
-      setState(STATES.DEFAULT);
-    }
+  useEffect(() => {
+    setDispatcher(dispatch);
+    fetch(getMovies).then(movies => setMovies(movies));
+  }, [])
+
+
+  if (error) {
+    return <ErrorPage />
+  } else {
+    return (
+      <React.Fragment>
+        <Header
+          isViewMode={state.mode === MODES.MOVIE_DETAILS}
+          closeViewMode={searchMode}
+          addMovie={addMovie}
+          logout={() => logout()}
+        >
+          {state.mode === MODES.SEARCH_MOVIES &&
+            <Search />}
+          {state.mode === MODES.MOVIE_DETAILS &&
+            <MovieDetails movie={state.movieDetails} />}
+        </Header>
+        <Content
+          movies={state.movies}
+          editMovie={editMovie}
+          deleteMovie={deleteMovie}
+          showMovieDetails={showMovieDetails}
+        />
+        <Footer />
+        {state.modal === MODALS.CREATE_OR_EDIT_MOVIE &&
+          <EditMovie movie={state.modalMovieDetails} submit={submitMovie} close={closeModal} />}
+        {state.modal === MODALS.CONFIRM_DELETE_MOVIE &&
+          <DeleteMovie movie={state.modalMovieDetails} confirm={confirmDeleteMovie} close={closeModal} />}
+        {state.modal === MODALS.NOTIFICATION &&
+          <Success close={closeModal} />}
+        {isLoading &&
+          <Loader />}
+      </React.Fragment>
+    )
   }
-
-  return (
-    <React.Fragment>
-      <Header addMovie={() => setState(STATES.ADD_MOVIE)} logout={() => logout()} />
-      <Content
-        movies={movies}
-        editMovie={(movie) => setState({ ...STATES.EDIT_MOVIE, movie })}
-        deleteMovie={(movie) => setState({ ...STATES.DELETE_MOVIE, movie })}
-      />
-      {(state.title == STATES.ADD_MOVIE.title || state.title == STATES.EDIT_MOVIE.title) &&
-        <EditMovie
-          movie={state.movie}
-          submit={(movie) => submitMovie(movie)}
-          close={() => setState(STATES.DEFAULT)}
-        />
-      }
-      {state.title == STATES.DELETE_MOVIE.title &&
-        <DeleteMovie
-          movie={state.movie}
-          confirm={(id) => setMovies(movies.filter(mov => mov.id != id))}
-          close={() => setState(STATES.DEFAULT)}
-        />
-      }
-      {state.title == STATES.MOVIE_IS_CREATED.title &&
-        <Success close={() => setState(STATES.DEFAULT)} />
-      }
-      <Footer />
-    </React.Fragment>
-  )
 }
 
 export default Home;

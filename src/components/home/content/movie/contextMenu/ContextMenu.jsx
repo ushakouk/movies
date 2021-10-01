@@ -16,6 +16,18 @@ function ContextMenu({ onEdit, onDelete }) {
     document.removeEventListener("click", collapseMenu)
   }
 
+  function edit(event) {
+    event.stopPropagation();
+    setExpanded(false);
+    onEdit();
+  }
+
+  function remove(event) {
+    event.stopPropagation();
+    setExpanded(false);
+    onDelete();
+  }
+
   return (
     <div className="context_menu">
       {!expanded &&
@@ -23,8 +35,8 @@ function ContextMenu({ onEdit, onDelete }) {
       }
       {expanded &&
         <div className="context_menu__content">
-          <div className="menu-item" onClick={onEdit}>Edit</div>
-          <div className="menu-item" onClick={onDelete}>Delete</div>
+          <div className="menu-item" onClick={(e) => edit(e)}>Edit</div>
+          <div className="menu-item" onClick={(e) => remove(e)}>Delete</div>
         </div>
       }
     </div>

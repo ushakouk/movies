@@ -1,10 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 import './content.scss';
 import Counter from './counter/Counter';
 import Movie from './movie/Movie';
 import Navigation from './navigation/Navigation';
 
-function Content({ movies, editMovie, deleteMovie }) {
+function Content({ movies, editMovie, deleteMovie, showMovieDetails }) {
+  const edit = useCallback((movie) => {
+    editMovie(movie);
+  }, [])
+
+  const remove = useCallback((movie) => {
+    deleteMovie(movie);
+  }, [])
+
+  const showDetails = useCallback((movie) => {
+    showMovieDetails(movie);
+  }, [])
 
   return (
     <div className="content">
@@ -15,8 +26,9 @@ function Content({ movies, editMovie, deleteMovie }) {
           <Movie
             key={index}
             movie={movie}
-            onEdit={editMovie}
-            onDelete={deleteMovie}
+            editMovie={edit}
+            deleteMovie={remove}
+            showMovieDetails={showDetails}
           />
         )}
       </div>

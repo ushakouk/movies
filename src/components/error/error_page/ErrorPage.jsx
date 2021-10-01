@@ -1,7 +1,7 @@
 import React from 'react';
 import './error_page.scss';
 
-function ErrorPage(props) {
+function ErrorPage() {
   return (
     <div className="error_page">
       <div className="error_message">Ooops, something wrong...</div>

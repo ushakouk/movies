@@ -1,45 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Home from './home/Home';
 import Login from './login/Login';
-import ErrorPage from './error/ErrorPage';
 import './App.scss';
+import ErrorBoundary from './error/ErrorBoundary';
 
-class App extends React.Component {
+function App() {
+  const [isAuth, setIsAuth] = useState(false);
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      isAuth: true,
-      hasError: false
-    };
+  function login(login, password) {
+    setIsAuth(true);
   }
 
-  static getDerivedStateFromError(error) {
-    return { hasError: true };
-  }
-
-  componentDidCatch(error, errorInfo) {
-    //log(error, errorInfo);
-  }
-
-  login(login, password) {
-    this.setState({ isAuth: true });
-  }
-
-  logout() {
-    this.setState({ isAuth: false });
-  }
-
-  render() {
-    const { hasError, isAuth } = this.state;
-    if (!hasError) {
-      return isAuth
-        ? <Home logout={() => this.logout()}/>
-        : <Login login={(login, password) => this.login(login, password)}/>
-    } else {
-      return <ErrorPage />
-    }
-  }
+  return (
+    <ErrorBoundary >
+      {isAuth
+        ? <Home logout={() => setIsAuth(false)} />
+        : <Login login={login} />
+      }
+    </ErrorBoundary>
+  )
 }
 
 export default App;

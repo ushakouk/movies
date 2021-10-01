@@ -5,6 +5,7 @@ import Input from '../../common/input/Input';
 import Button from '../../common/button/Button';
 import TextArea from '../../common/textarea/TextArea';
 import MultiSelect from '../../common/multiselect/MultiSelect';
+import { parseTime } from '../../../util/util';
 
 const GENRES = ["Drama", "Romance", "Fantasy", "Adventure", "Science Fiction"]
 const DEFAULT_MOVIE_STATE = {
@@ -24,10 +25,6 @@ function EditMovie(props) {
     return props.movie
       ? { ...props.movie, runtime: parseTime(props.movie.runtime) }
       : DEFAULT_MOVIE_STATE
-  }
-
-  function parseTime(minutes) {
-    return Math.trunc(minutes / 60) + "h " + minutes % 60 + "min"
   }
 
   return (
