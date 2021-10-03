@@ -1,26 +1,37 @@
-import React, { useCallback } from 'react';
-import './content.scss';
+import React, { useCallback, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { getMovies } from '../../../store/actions/complex';
+import { showMovieDetails } from '../../../store/actions/header';
+import { createOrEditMovie, deleteMovie } from '../../../store/actions/modal';
+import { setSort, setFilter } from '../../../store/actions/content';
 import Counter from './counter/Counter';
 import Movie from './movie/Movie';
 import Navigation from './navigation/Navigation';
+import './content.scss';
 
-function Content({ movies, editMovie, deleteMovie, showMovieDetails }) {
+function Content({ movies, found, sort, filter, actions }) {
+
+  useEffect(() => {
+    actions.getMovies(filter, sort)
+  }, [sort, filter])
+
   const edit = useCallback((movie) => {
-    editMovie(movie);
+    actions.createOrEditMovie(movie);
   }, [])
 
   const remove = useCallback((movie) => {
-    deleteMovie(movie);
+    actions.deleteMovie(movie.id);
   }, [])
 
   const showDetails = useCallback((movie) => {
-    showMovieDetails(movie);
+    actions.showMovieDetails(movie);
   }, [])
 
   return (
     <div className="content">
-      <Navigation />
-      <Counter value={movies.length} />
+      <Navigation sort={sort} setSort={actions.setSort} filter={filter} setFilter={actions.setFilter} />
+      <Counter value={found} />
       <div className="movies_container">
         {movies.map((movie, index) =>
           <Movie
@@ -36,4 +47,14 @@ function Content({ movies, editMovie, deleteMovie, showMovieDetails }) {
   )
 }
 
-export default Content;
+const mapStateToProps = ({ content }) => ({
+  ...content
+});
+
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators({ 
+    createOrEditMovie, deleteMovie, showMovieDetails, setSort, setFilter, getMovies 
+  }, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Content);

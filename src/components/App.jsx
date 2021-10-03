@@ -1,24 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { login } from '../store/actions/app';
 import Home from './home/Home';
 import Login from './login/Login';
-import './App.scss';
 import ErrorBoundary from './error/ErrorBoundary';
+import './App.scss';
 
-function App() {
-  const [isAuth, setIsAuth] = useState(false);
-
-  function login(login, password) {
-    setIsAuth(true);
-  }
-
+function App({ isAuth, login }) {
+  
   return (
     <ErrorBoundary >
       {isAuth
-        ? <Home logout={() => setIsAuth(false)} />
+        ? <Home />
         : <Login login={login} />
       }
     </ErrorBoundary>
   )
 }
 
-export default App;
+
+const mapStateToProps = ({ app }) => ({
+  isAuth: app.isAuth
+});
+
+const mapDispatchToProps = dispatch => ({
+  login: bindActionCreators(login, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

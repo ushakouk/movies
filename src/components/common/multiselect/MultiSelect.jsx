@@ -12,12 +12,13 @@ const MultiSelect = ({ label, options, values, onChange }) => {
 
   function onCheckboxChange({ target }) {
     const name = target.name;
+    let result;
     if (target.checked) {
-      setSelected([...selected, name])
+      result = [...selected, name]
     } else {
-      setSelected(selected.filter(item => item !== name))
+      result = selected.filter(item => item !== name)
     }
-    onChange(selected)
+    onChange(result)
   }
 
   return (
