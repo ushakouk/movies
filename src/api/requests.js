@@ -1,14 +1,17 @@
 import axios from 'axios';
-import { GENRES } from '../store/constants/constants';
+import { GENRES, API } from '../store/constants/constants';
 
-export function getMoviesRequest(filter, sortBy) {
+export function getMoviesRequest(search, filter, sortBy, loadIterator) {
    return new Promise((resolve, reject) =>
       axios.get(`http://localhost:4000/movies`, {
          params: {
-            filter: filter === GENRES.ALL ? [] : filter,
+            search,
+            searchBy: search ? API.SEARCH_BY : null,
+            filter: (!filter || filter === GENRES.ALL) ? [] : filter,
             sortBy,
-            sortOrder: 'desc',
-            limit: 25
+            sortOrder: API.SORT_ORDER,
+            limit: API.LOAD_LIMIT,
+            offset: loadIterator ? loadIterator * API.LOAD_LIMIT : 0
          }
       }).then(resp => resolve(resp.data))
          .catch(err => reject(err))

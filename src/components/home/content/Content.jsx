@@ -1,20 +1,27 @@
 import React, { useCallback, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getMovies } from '../../../store/actions/complex';
+import { getMovies, loadMoreMovies } from '../../../store/actions/complex';
 import { showMovieDetails } from '../../../store/actions/header';
 import { createOrEditMovie, deleteMovie } from '../../../store/actions/modal';
 import { setSort, setFilter } from '../../../store/actions/content';
+import { API } from '../../../store/constants/constants';
 import Counter from './counter/Counter';
 import Movie from './movie/Movie';
 import Navigation from './navigation/Navigation';
 import './content.scss';
 
-function Content({ movies, found, sort, filter, actions }) {
+function Content({ actions, movies, found, sort, filter, toSearch, loadMoreTrigger, loadIterator }) {
 
   useEffect(() => {
-    actions.getMovies(filter, sort)
-  }, [sort, filter])
+    actions.getMovies(toSearch, filter, sort)
+  }, [sort, filter, toSearch])
+
+  useEffect(() => {
+    if (loadMoreTrigger && found > API.LOAD_LIMIT * loadIterator) {
+      actions.loadMoreMovies(toSearch, filter, sort, loadIterator)
+    }
+  }, [loadMoreTrigger])
 
   const edit = useCallback((movie) => {
     actions.createOrEditMovie(movie);
@@ -47,13 +54,13 @@ function Content({ movies, found, sort, filter, actions }) {
   )
 }
 
-const mapStateToProps = ({ content }) => ({
-  ...content
+const mapStateToProps = ({ content, header }) => ({
+  ...content, toSearch: header.toSearch
 });
 
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators({ 
-    createOrEditMovie, deleteMovie, showMovieDetails, setSort, setFilter, getMovies 
+  actions: bindActionCreators({
+    createOrEditMovie, deleteMovie, showMovieDetails, setSort, setFilter, getMovies, loadMoreMovies
   }, dispatch)
 });
 

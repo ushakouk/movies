@@ -5,6 +5,11 @@ export const setMovies = (movies, found) => ({
   payload: { movies, found }
 })
 
+export const addMovies = (movies) => ({
+  type: ACTIONS.ADD_MOVIES,
+  payload: movies
+})
+
 export const addMovie = (movie) => ({
   type: ACTIONS.ADD_MOVIE,
   payload: movie

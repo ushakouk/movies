@@ -12,13 +12,13 @@ function Notification({ type, message, destroy }) {
   }, [])
 
   function showNotification() {
-    notification.current.classList.add('visible')
+    setTimeout(() => notification.current.classList.add('visible'), 0)
   }
 
   function hideAndDestroy() {
     setTimeout(() => {
       notification.current.classList.remove('visible')
-      setTimeout(() => destroy(), 1000)
+      setTimeout(() => destroy(), 3000)
     }, 5000)
   }
 

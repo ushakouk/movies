@@ -8,3 +8,8 @@ export const showMovieDetails = (movie) => ({
 export const searchMode = () => ({
   type: ACTIONS.TO_SEARCH_MODE
 })
+
+export const setSearchValue = (value) => ({
+  type: ACTIONS.SET_SEARCH_VALUE,
+  payload: value
+})

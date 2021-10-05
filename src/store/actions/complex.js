@@ -1,15 +1,23 @@
 import { getMoviesRequest, updateMoviesRequest, createMoviesRequest, removeMovieRequest } from '../../api/requests';
-import { setMovies, updateMovie, removeMovie } from './content';
+import { setMovies, addMovies, updateMovie, removeMovie } from './content';
 import { setIsLoading, setNotification } from './app';
 import { closeModal } from './modal';
 import { NOTIFICATIONS } from '../constants/constants';
 
-export const getMovies = (filter, sort) => (dispatch) => {
+export const getMovies = (search, filter, sort) => (dispatch) => {
   dispatch(setIsLoading(true));
-  getMoviesRequest(filter, sort).then(resp => {
+  getMoviesRequest(search, filter, sort).then(resp => {
     dispatch(setMovies(resp.data, resp.totalAmount))
     dispatch(setIsLoading(false))
-  }).catch(err => dispatch(processRequestError()))
+  }).catch(err => dispatch(processRequestError(err)))
+}
+
+export const loadMoreMovies = (search, filter, sort, loadIterator) => (dispatch) => {
+  dispatch(setIsLoading(true));
+  getMoviesRequest(search, filter, sort, loadIterator).then(resp => {
+    dispatch(addMovies(resp.data))
+    dispatch(setIsLoading(false))
+  }).catch(err => dispatch(processRequestError(err)))
 }
 
 export const submitMovie = (movie) => (dispatch) => {

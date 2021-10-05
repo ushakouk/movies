@@ -2,7 +2,8 @@ import { ACTIONS, HEADER_MODES } from '../../constants/constants';
 
 const initialState = {
   mode: HEADER_MODES.SEARCH_MOVIES,
-  movie: null
+  movie: null,
+  toSearch: ""
 }
 
 export const header = (state = initialState, action) => {
@@ -11,6 +12,8 @@ export const header = (state = initialState, action) => {
       return { ...state, mode: HEADER_MODES.MOVIE_DETAILS, movie: action.payload }
     case ACTIONS.TO_SEARCH_MODE:
       return { ...state, mode: HEADER_MODES.SEARCH_MOVIES, movie: null }
+    case ACTIONS.SET_SEARCH_VALUE:
+      return { ...state, toSearch: action.payload }
     default:
       return {...state}
   }

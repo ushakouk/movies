@@ -7,8 +7,9 @@
 }
 
 .image {
-  max-height: 450px;
-  max-width: 320px;
+  width: 300px;
+  height: 450px;
+  object-fit: cover;
 }
 
 .info_group {
@@ -37,6 +38,7 @@
 
 .genre {
   margin-top: 8px;
+  max-width: 300px;
 }
 
 .movie_details:hover .context_menu__button:after {

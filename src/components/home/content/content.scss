@@ -1,8 +1,10 @@
 .content {
   background-color: #232323;
   margin-top: 10px;
-  height: 100%;
   padding: 0 60px 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 2;
 }
 
 .movies_container {
