@@ -5,26 +5,36 @@ import Input from '../../common/input/Input';
 import Button from '../../common/button/Button';
 import TextArea from '../../common/textarea/TextArea';
 import MultiSelect from '../../common/multiselect/MultiSelect';
-import { parseTime } from '../../../util/util';
 
 const GENRES = ["Drama", "Romance", "Fantasy", "Adventure", "Science Fiction"]
 const DEFAULT_MOVIE_STATE = {
   title: "",
   release_date: "",
   poster_path: "",
-  vote_average: "",
+  vote_average: null,
   genres: [],
-  runtime: "",
-  overview: ""
+  runtime: null,
+  overview: "",
+  tagline: "empty"
 }
 
 function EditMovie(props) {
-  const [movie, setMovie] = useState(prepareMovie());
+  const [movie, setMovie] = useState(initMovie());
 
-  function prepareMovie() {
+  function initMovie() {
     return props.movie
-      ? { ...props.movie, runtime: parseTime(props.movie.runtime) }
+      ? prepareMovie(props.movie)
       : DEFAULT_MOVIE_STATE
+  }
+
+  function prepareMovie(movie) {
+    if (!movie.tagline) {
+      movie.tagline = "empty"
+    }
+    if (!movie.runtime) {
+      movie.runtime = 0;
+    }
+    return movie;
   }
 
   return (
@@ -63,7 +73,7 @@ function EditMovie(props) {
           value={movie.vote_average}
           type="number"
           placeholder="7.8"
-          onChange={e => setMovie({ ...movie, vote_average: e.target.value })}
+          onChange={e => setMovie({ ...movie, vote_average: Number(e.target.value) })}
         />
       </div>
       <div className="row">
@@ -78,9 +88,9 @@ function EditMovie(props) {
           label="RUNTIME"
           size="small"
           value={movie.runtime}
-          type="text"
+          type="number"
           placeholder="minutes"
-          onChange={e => setMovie({ ...movie, runtime: e.target.value })}
+          onChange={e => setMovie({ ...movie, runtime: Number(e.target.value) })}
         />
       </div>
       <TextArea
@@ -92,7 +102,7 @@ function EditMovie(props) {
       />
 
       <Button style="primary" onClick={() => props.submit(movie)}>SUBMIT</Button>
-      <Button style="negative" onClick={() => setMovie(prepareMovie())}>RESET</Button>
+      <Button style="negative" onClick={() => setMovie(initMovie())}>RESET</Button>
     </Dialog>
   )
 }

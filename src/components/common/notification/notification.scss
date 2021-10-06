@@ -1,0 +1,50 @@
+.popup-notification {
+  position: fixed;
+  z-index: 3;
+  top: -100px;
+  right: 30px;
+  background: #232323;
+  width: 400px;
+  border-radius: 4px;
+  padding: 25px;
+  border-style: solid;
+  border-color: #F65261;
+  transition: top 2s;
+  display: flex;
+}
+
+.popup-notification.visible {
+  top: 10px;
+}
+
+.notification-icon {
+  color: white;
+  background: #F65261;
+  font-size: 20px;
+  padding: 0 8px 3px;
+  border-radius: 16px;
+  vertical-align: top;
+  height: fit-content;
+  margin: auto 15px auto 0;
+}
+
+.notification-icon.success::after {
+  content: '\2713';
+}
+
+.notification-icon.error {
+  padding: 0 12px 3px;
+  font-weight: 700;
+}
+
+.notification-icon.error::after {
+  content: '!';
+}
+
+.notification-message {
+  color: white;
+  font-size: 18px;
+  display: inline-block;
+  white-space: pre-wrap;
+}
+

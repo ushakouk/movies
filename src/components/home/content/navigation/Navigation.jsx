@@ -1,27 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './navigation.scss';
 import Selector from './selector/Selector';
 import Select from '../../../common/select/Select';
+import { GENRES, SORTES } from '../../../../store/constants/constants';
 
-const STYLES = ['ALL', 'DOCUMENTARY', 'COMEDY', 'HORROR', 'CRIME'];
-const SORT_TYPES = [
-  { name: "RELEASE DATE", value: "release_date" },
-  { name: "GENRE", value: "genre" },
-  { name: "SMTH ELSE", value: "smth" }
-]
-
-function Navigation() {
-
-  const [selected, setSelected] = useState(STYLES[0]);
-
+function Navigation({ sort, setSort, filter, setFilter }) {
   return (
     <div className="navigation">
-      {STYLES.map((style, index) =>
-        <Selector key={index} name={style} selected={selected} select={(val) => setSelected(val)}/>
+      {Object.values(GENRES).map((style, index) =>
+        <Selector key={index} name={style} selected={filter} select={setFilter}/>
       )}
       <Select 
         label="SORT BY"
-        options={SORT_TYPES}
+        options={Object.values(SORTES)}
+        selectedValue={sort}
+        onChange={setSort}
         className="sort"
       />
     </div>

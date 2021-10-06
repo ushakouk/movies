@@ -26,6 +26,10 @@
   border-color: #F65261;
 }
 
+.button.hidden {
+  visibility: hidden;
+}
+
 .button.small {
   padding: 8px 16px;
 }

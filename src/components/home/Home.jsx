@@ -1,64 +1,67 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { closeModal } from '../../store/actions/modal';
+import { removeNotification } from '../../store/actions/app';
+import { submitMovie, submitRemoveMovie } from '../../store/actions/complex';
+import { MODALS } from '../../store/constants/constants';
 import Header from './header/Header';
 import Content from './content/Content';
 import Footer from './footer/Footer';
 import EditMovie from './modal/EditMovie';
 import DeleteMovie from './modal/DeleteMovie';
-import Success from './modal/Success';
-import Search from './header/search/Search';
-import MovieDetails from './header/movieDetails/MovieDetails';
+import Notification from '../common/notification/Notification';
 import Loader from '../common/loader/Loader';
-import ErrorPage from '../error/error_page/ErrorPage';
-import { initialState, reducer, MODALS, MODES } from './reducer/reducer';
-import { setDispatcher, setMovies, showMovieDetails, searchMode, addMovie, editMovie, submitMovie, deleteMovie, confirmDeleteMovie, closeModal } from './reducer/actions';
-import { useFetching } from '../../hooks/useFetching';
-import { getMovies } from '../../api/requests';
-import './home.scss';
+import Scrollable from '../common/scrollable/Scrollable';
 
-function Home({ logout }) {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const [fetch, isLoading, error] = useFetching();
+function Home({ isLoading, notification, modal, modalMovie, modalMessage, actions }) {
+  const { closeModal, submitMovie, submitRemoveMovie, removeNotification } = actions;
 
-  useEffect(() => {
-    setDispatcher(dispatch);
-    fetch(getMovies).then(movies => setMovies(movies));
-  }, [])
+  const [isBottom, setIsBottom] = useState(false);
 
+  function onScroll(e) {
+    const loadTrigger = e.target.clientHeight + 70;
+    const pageHeight = e.target.scrollHeight;
+    const scrolled = e.target.scrollTop;
 
-  if (error) {
-    return <ErrorPage />
-  } else {
-    return (
-      <React.Fragment>
-        <Header
-          isViewMode={state.mode === MODES.MOVIE_DETAILS}
-          closeViewMode={searchMode}
-          addMovie={addMovie}
-          logout={() => logout()}
-        >
-          {state.mode === MODES.SEARCH_MOVIES &&
-            <Search />}
-          {state.mode === MODES.MOVIE_DETAILS &&
-            <MovieDetails movie={state.movieDetails} />}
-        </Header>
-        <Content
-          movies={state.movies}
-          editMovie={editMovie}
-          deleteMovie={deleteMovie}
-          showMovieDetails={showMovieDetails}
-        />
-        <Footer />
-        {state.modal === MODALS.CREATE_OR_EDIT_MOVIE &&
-          <EditMovie movie={state.modalMovieDetails} submit={submitMovie} close={closeModal} />}
-        {state.modal === MODALS.CONFIRM_DELETE_MOVIE &&
-          <DeleteMovie movie={state.modalMovieDetails} confirm={confirmDeleteMovie} close={closeModal} />}
-        {state.modal === MODALS.NOTIFICATION &&
-          <Success close={closeModal} />}
-        {isLoading &&
-          <Loader />}
-      </React.Fragment>
-    )
+    const rest = pageHeight - scrolled;
+    if (rest < loadTrigger) {
+      setIsBottom(true)
+    } else {
+      if (isBottom) {
+        setIsBottom(false)
+      }
+    }
   }
-}
 
-export default Home;
+  return (
+    <Scrollable onScroll={onScroll}>
+      <Header />
+      <Content loadMoreTrigger={isBottom} />
+      <Footer />
+      {modal === MODALS.CREATE_OR_EDIT_MOVIE &&
+        <EditMovie movie={modalMovie} submit={submitMovie} close={closeModal} />}
+      {modal === MODALS.CONFIRM_DELETE_MOVIE &&
+        <DeleteMovie movie={modalMovie} confirm={submitRemoveMovie} close={closeModal} />}
+      {modal === MODALS.NOTIFICATION &&
+        <Notification close={closeModal} message={modalMessage} />}
+      {isLoading &&
+        <Loader />}
+      {notification &&
+        <Notification type={notification.type} message={notification.message} destroy={removeNotification} />}
+    </Scrollable>
+  )
+}
+const mapStateToProps = ({ app, modal }) => ({
+  isLoading: app.isLoading,
+  notification: app.notification,
+  modal: modal.modal,
+  modalMovie: modal.movie,
+  modalMessage: modal.message
+});
+
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators({ closeModal, submitMovie, submitRemoveMovie, removeNotification }, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

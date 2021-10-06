@@ -2,10 +2,14 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './select.scss';
 
-function Select({ label, options, onChange, className }) {
+function Select({ label, options, selectedValue, onChange, className }) {
 
-  const [selected, setSelected] = useState(options[0]);
+  const [selected, setSelected] = useState(findOption(selectedValue));
   const [expanded, setExpanded] = useState(false);
+
+  function findOption(value) {
+    return options.find(option => option.value === value)
+  }
 
   function onSelect(event) {
     const option = { name: event.target.innerHTML, value: event.target.getAttribute("value") };
@@ -34,7 +38,7 @@ function Select({ label, options, onChange, className }) {
       {label &&
         <div className="select__label">{label}</div>
       }
-      <div className="select" onClick={(e) => expandMenu(e)}>
+      <div className="select" onClick={expandMenu}>
         <div className="select__selected" >{selected.name}</div><span className="arrow-down"/>
         {expanded &&
           <div className="dropdown">
@@ -58,6 +62,7 @@ Select.propTypes = {
     name: PropTypes.string,
     value: PropTypes.string
   })),
+  selectedValue: PropTypes.string,
   onChange: PropTypes.func,
   className: PropTypes.string
 }
