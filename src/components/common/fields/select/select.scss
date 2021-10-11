@@ -26,10 +26,14 @@
 .dropdown {
   position: absolute;
   left: 0;
-  width: 100%;
+  width: 98%;
   padding: 5px 0;
   z-index: 1;
   background-color: #232323;
+  max-height: 220px;
+  overflow-y: auto;
+  margin-left: 1%;
+
 }
 
 .dropdown__item {

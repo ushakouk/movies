@@ -1,7 +1,7 @@
 import React from 'react';
 import './navigation.scss';
 import Selector from './selector/Selector';
-import Select from '../../../common/select/Select';
+import Select from '../../../common/fields/select/Select';
 import { GENRES, SORTES } from '../../../../store/constants/constants';
 
 function Navigation({ sort, setSort, filter, setFilter }) {
