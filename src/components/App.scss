@@ -28,26 +28,7 @@ body {
   top: 14px;
 }
 
-
-.big-arrow-down {
-  width: 0px;
-  height: 0px;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-bottom: 7px solid #F65261;
-  position: absolute;
-  right: 14px;
-  top: 26px;
-}
-
-
-.big-arrow-up {
-  width: 0px;
-  height: 0px;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-top: 7px solid #F65261;
-  position: absolute;
-  right: 14px;
-  top: 26px;
+.row {
+  display: flex;
+  margin-top: 20px;
 }

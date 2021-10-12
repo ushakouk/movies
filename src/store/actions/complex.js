@@ -63,7 +63,7 @@ const processRequestError = (err) => (dispatch) => {
     if (err.response.status === 400 && err.response.data.messages) {
       return dispatch(setNotification(
         NOTIFICATIONS.TYPES.ERROR,
-        NOTIFICATIONS.MESSAGES.VALIDATION_ERROR + err.response.data.messages.join('\n'))
+        NOTIFICATIONS.MESSAGES.VALIDATION_ERROR)
       )
     } else if (err.response.status === 404) {
       return dispatch(setNotification(

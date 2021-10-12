@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Dialog from '../common/dialog/Dialog';
-import Input from '../common/input/Input';
+import Input from '../common/fields/input/Input';
 import Title from '../common/title/Title';
 import Button from '../common/button/Button';
 import './login.scss';
