@@ -4,20 +4,12 @@ import Title from '../../../common/title/Title';
 import Button from '../../../common/button/Button';
 import Input from '../../../common/fields/input/Input';
 
-function Search({ value, search, reset }) {
-  const [toSearch, setToSearch] = useState(value);
+function Search({ initValue, search, reset }) {
+  const [value, setValue] = useState("");
 
   useEffect(() => {
-    setToSearch(value);
-  }, [value])
-
-  function onReset() {
-    if (value) {
-      reset()
-    } else {
-      setToSearch("")
-    }
-  }
+    setValue(initValue ? initValue : "");
+  }, [initValue])
 
   return (
     <div className="search-block">
@@ -25,13 +17,13 @@ function Search({ value, search, reset }) {
       <div className="row">
         <Input
           size="super-wide"
-          value={toSearch}
+          value={value}
           type="text"
           placeholder="What do you want to watch"
-          onChange={e => setToSearch(e.target.value)}
+          onChange={e => setValue(e.target.value)}
         />
-        <Button style="primary" onClick={() => search(toSearch)}>SEARCH</Button>
-        <Button style={`negative ${!value && 'hidden'}`} onClick={onReset}>RESET</Button>
+        <Button style="primary" onClick={() => search(value)}>SEARCH</Button>
+        <Button style={`negative ${!initValue && 'hidden'}`} onClick={reset}>RESET</Button>
       </div>
     </div>
   )

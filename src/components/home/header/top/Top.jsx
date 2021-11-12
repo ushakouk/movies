@@ -2,23 +2,18 @@ import React from 'react';
 import './top.scss';
 import Logo from '../../../common/logo/Logo';
 import Button from '../../../common/button/Button';
-import { HEADER_MODES } from '../../../../store/constants/constants';
 
-function Top({ mode, closeViewMode, addMovie, logout }) {
-  function onAddMovieClick() {
-    addMovie()
-  }
-
+function Top({ isViewMode, closeViewMode, addMovie, logout }) {
   return (
     <div className="top">
       <Logo />
       <div className="top__buttons">
-        {mode === HEADER_MODES.MOVIE_DETAILS &&
-          <Button style="search-icon" onClick={closeViewMode}></Button>}
-        {mode === HEADER_MODES.SEARCH_MOVIES &&
+        {isViewMode ?
+          <Button style="search-icon" onClick={closeViewMode}></Button>
+          :
           <React.Fragment>
             <Button style="negative small" onClick={logout}>LOG OUT</Button>
-            <Button style="small" onClick={onAddMovieClick}>+ ADD MOVIE</Button>
+            <Button style="small" onClick={addMovie}>+ ADD MOVIE</Button>
           </React.Fragment>}
       </div>
     </div>

@@ -4,11 +4,11 @@ import Selector from './selector/Selector';
 import Select from '../../../common/fields/select/Select';
 import { GENRES, SORTES } from '../../../../store/constants/constants';
 
-function Navigation({ sort, setSort, filter, setFilter }) {
+function Navigation({ sort = SORTES.RELEASE_DATE.value, setSort, filter = GENRES.ALL, setFilter }) {
   return (
     <div className="navigation">
-      {Object.values(GENRES).map((style, index) =>
-        <Selector key={index} name={style} selected={filter} select={setFilter}/>
+      {Object.values(GENRES).map((genre, index) =>
+        <Selector key={index} name={genre} selected={filter} select={setFilter}/>
       )}
       <Select 
         label="SORT BY"

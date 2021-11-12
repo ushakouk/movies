@@ -18,6 +18,14 @@ export function getMoviesRequest(search, filter, sortBy, loadIterator) {
    );
 }
 
+export function getMovieRequest(id) {
+   return new Promise((resolve, reject) =>
+      axios.get(`http://localhost:4000/movies/${id}`)
+         .then(resp => resolve(resp.data))
+         .catch(err => reject(err))
+   );
+}
+
 export function createMoviesRequest(movie) {
    return new Promise((resolve, reject) =>
       axios.post(`http://localhost:4000/movies`, movie)
