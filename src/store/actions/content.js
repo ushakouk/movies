@@ -25,12 +25,3 @@ export const removeMovie = (id) => ({
   payload: id
 })
 
-export const setSort = (sort) => ({
-  type: ACTIONS.SET_SORT,
-  payload: sort
-})
-
-export const setFilter = (filter) => ({
-  type: ACTIONS.SET_FILTER,
-  payload: filter
-})

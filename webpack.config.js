@@ -15,10 +15,15 @@ const optimization = {
 const configs = {
   entry: './src/index.js',
 
+  devServer: {
+    historyApiFallback: true,
+  },
+
   output: {
     filename: '[name].js',
     chunkFilename: '[id].js',
     path: path.join(__dirname, 'built'),
+    publicPath: '/'
   },
 
   resolve: {

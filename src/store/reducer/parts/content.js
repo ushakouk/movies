@@ -1,11 +1,9 @@
-import { ACTIONS, SORTES, GENRES } from '../../constants/constants';
+import { ACTIONS } from '../../constants/constants';
 
 const initialState = {
   movies: [],
   found: 0,
-  loadIterator: 0,
-  sort: SORTES.RELEASE_DATE.value,
-  filter: GENRES.ALL
+  loadIterator: 0
 }
 
 export const content = (state = initialState, action) => {
@@ -21,10 +19,6 @@ export const content = (state = initialState, action) => {
       return { ...state, movies: [...state.movies] }
     case ACTIONS.REMOVE_MOVIE:
       return { ...state,  movies: [...state.movies.filter(movie => movie.id != action.payload)] };
-    case ACTIONS.SET_SORT:
-      return { ...state, sort: action.payload }
-    case ACTIONS.SET_FILTER:
-      return { ...state, filter: action.payload }
     default:
       return {...state}
   }

@@ -1,20 +1,30 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import { login } from '../store/actions/app';
 import Home from './home/Home';
-import Login from './login/Login';
 import ErrorBoundary from './error/ErrorBoundary';
+import NotFound from './error/pages/NotFound';
 import './App.scss';
 
 function App({ isAuth, login }) {
   
   return (
     <ErrorBoundary >
-      {isAuth
-        ? <Home />
-        : <Login login={login} />
-      }
+      <Router>
+        <Switch>
+          <Route path="/search/:searchQuery?">
+            <Home />
+          </Route>
+          <Route exact path="/">
+            <Redirect to="/search" />
+          </Route>
+          <Route path="*">
+            <NotFound />
+          </Route>
+        </Switch>
+      </Router>
     </ErrorBoundary>
   )
 }
