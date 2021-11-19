@@ -6,7 +6,7 @@ import { removeNotification } from '../../store/actions/app';
 import { submitMovie, submitRemoveMovie, getMovies, loadMoreMovies } from '../../store/actions/complex';
 import { MODALS, API } from '../../store/constants/constants';
 import { useParams, useLocation, useHistory } from "react-router-dom";
-import { defineGenre, defineSort, objectEquals, shallowCompare } from '../../util/util';
+import { defineGenre, defineSort, shallowCompare } from '../../util/util';
 import Header from './header/Header';
 import Content from './content/Content';
 import Footer from './footer/Footer';
@@ -16,7 +16,7 @@ import Notification from '../common/notification/Notification';
 import Loader from '../common/loader/Loader';
 import Scrollable from '../common/scrollable/Scrollable';
 
-function Home({ isLoading, notification, modal, modalMovie, modalMessage, loadIterator, found, actions }) {
+function Home({ isLoading, notification, modal, modalMovie, loadIterator, found, actions }) {
   const BASE_URL = '/search';
   const { closeModal, submitMovie, submitRemoveMovie, removeNotification } = actions;
 
@@ -92,8 +92,6 @@ function Home({ isLoading, notification, modal, modalMovie, modalMessage, loadIt
         <EditMovie movie={modalMovie} submit={submitMovie} close={closeModal} />}
       {modal === MODALS.CONFIRM_DELETE_MOVIE &&
         <DeleteMovie movie={modalMovie} confirm={submitRemoveMovie} close={closeModal} />}
-      {modal === MODALS.NOTIFICATION &&
-        <Notification close={closeModal} message={modalMessage} />}
       {isLoading &&
         <Loader />}
       {notification &&
@@ -106,7 +104,6 @@ const mapStateToProps = ({ app, modal, content }) => ({
   notification: app.notification,
   modal: modal.modal,
   modalMovie: modal.movie,
-  modalMessage: modal.message,
   loadIterator: content.loadIterator,
   found: content.found
 });

@@ -12,7 +12,7 @@ function Search({ initValue, search, reset }) {
   }, [initValue])
 
   return (
-    <div className="search-block">
+    <div className="search-block" role="search-block">
       <Title>FIND YOUR MOVIE</Title>
       <div className="row">
         <Input
