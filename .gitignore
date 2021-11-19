@@ -1,4 +1,6 @@
 /node_modules
+/coverage
+**/__snapshots__/
 /built
 .idea/
 package-lock.json

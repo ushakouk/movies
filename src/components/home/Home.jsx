@@ -34,7 +34,6 @@ function Home({ isLoading, notification, modal, modalMovie, modalMessage, loadIt
     }
     if (!shallowCompare(searchQuery, query)) {
       setQuery(searchQuery)
-      console.log("set query: " + searchQuery)
     }
     
     actions.getMovies(searchQuery, defineGenre(searchParams), defineSort(searchParams))
