@@ -2,15 +2,18 @@ import React from "react";
 import Home from "../../../src/components/home/Home";
 import { renderWithStoreProvider, routerWrapper } from "../../testUtil";
 import { getMovieRequest, getMoviesRequest } from "../../../src/api/requests";
-import { screen, waitForElementToBeRemoved } from "@testing-library/react";
+import { MOVIES } from "../../__mocks__/dataMock";
+import { GENRES, SORTES } from "../../../src/store/constants/constants";
+
+import { screen, waitForElementToBeRemoved, cleanup } from "@testing-library/react";
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom';
 import "regenerator-runtime";
-import { MOVIES } from "../../__mocks__/dataMock";
-import { GENRES, SORTES } from "../../../src/store/constants/constants";
 jest.mock("../../../src/api/requests");
 
 describe('Home', () => {
+
+  afterEach(cleanup)
 
   test('Home init snapshot', async () => {
     getMoviesRequest.mockImplementation(mockedGetMovies)

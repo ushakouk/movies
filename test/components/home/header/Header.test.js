@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../../../../src/components/home/header/Header";
 import { renderWithStoreProvider } from "../../../testUtil";
 import { getMovieRequest } from "../../../../src/api/requests";
-import { screen, fireEvent, waitForElementToBeRemoved } from "@testing-library/react";
+import { screen, fireEvent, waitForElementToBeRemoved, cleanup } from "@testing-library/react";
 import '@testing-library/jest-dom';
 import "regenerator-runtime";
 jest.mock("../../../../src/api/requests");
@@ -12,11 +12,12 @@ describe('Header', () => {
   const MOVIE_ID = 1;
   const movie = { id: MOVIE_ID, genres: [], title: 'Yeah', release_date: '1999-12-12', runtime: '120' }
   
+  afterEach(cleanup)
 
   test('Header init snapshot', () => {
     const { asFragment } = renderWithStoreProvider(<Header />);
 
-    expect(asFragment(<Header />)).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   })
 
   test('Header input, search, reset', () => {
