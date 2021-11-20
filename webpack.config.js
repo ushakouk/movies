@@ -17,6 +17,7 @@ const configs = {
 
   devServer: {
     historyApiFallback: true,
+    port: 8081
   },
 
   output: {

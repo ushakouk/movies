@@ -12,17 +12,14 @@ import "regenerator-runtime";
 jest.mock("../../../src/api/requests");
 
 describe('Home', () => {
-
   afterEach(cleanup)
 
   test('Home init snapshot', async () => {
     getMoviesRequest.mockImplementation(mockedGetMovies)
     const routeWrappedHome = routerWrapper(<Home />, "")
-    let { asFragment } = renderWithStoreProvider(routeWrappedHome);
-
-    await waitForElementToBeRemoved(() => screen.getByRole('loader'))
-
-    expect(asFragment(routeWrappedHome)).toMatchSnapshot();
+    let { asFragment } = await renderWithStoreProvider(routeWrappedHome);
+    
+    expect(asFragment()).toMatchSnapshot();
   })
 
 
@@ -31,8 +28,7 @@ describe('Home', () => {
     getMovieRequest.mockImplementation((id) => Promise.resolve(MOVIES[0]))
 
     //init
-    renderWithStoreProvider(routerWrapper(<Home />, ""));
-    await waitForElementToBeRemoved(() => screen.getByRole('loader'))
+    await renderWithStoreProvider(routerWrapper(<Home />, ""));
 
     expect(getMoviesRequest).toHaveBeenCalledTimes(2)
     expect(getMoviesRequest).toHaveBeenCalledWith(undefined, GENRES.ALL, SORTES.RELEASE_DATE.value)
@@ -55,15 +51,16 @@ describe('Home', () => {
     expect(getMoviesRequest).toHaveBeenCalledWith(MOVIES[0].title, GENRES.ALL, SORTES.RELEASE_DATE.value)
 
     expect(screen.getAllByRole('movie')).toHaveLength(1)
-    expect(search.value).toEqual(screen.getByRole('movie').getElementsByClassName('name')[0].innerHTML)
+    const movieTitle = screen.getByRole('movie').getElementsByClassName('name')[0].innerHTML;
+    expect(search.value).toEqual(movieTitle)
 
     //select movie
     userEvent.click(screen.getByRole('movie'))
     await waitForElementToBeRemoved(() => screen.getByRole('loader'))
 
     expect(screen.getByRole('movie-details')).toBeInTheDocument()
-    expect(screen.getByRole('movie-details').getElementsByClassName('details_title')[0].innerHTML)
-      .toEqual(screen.getByRole('movie').getElementsByClassName('name')[0].innerHTML.toUpperCase())
+    const movieDetailsTitle = screen.getByRole('movie-details').getElementsByClassName('details_title')[0].innerHTML
+    expect(movieDetailsTitle).toEqual(movieTitle.toUpperCase())
   })
 })
 
