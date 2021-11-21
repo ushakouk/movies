@@ -43,18 +43,6 @@ describe('Content reducer', () => {
     expect(state.loadIterator).toEqual(2)
   })
 
-  // test('add movie', () => {
-  //   state = content(state, addMovie(THIRD_MOVIE))
-
-  //   expect(Object.keys(state).length).toEqual(3)
-  //   expect(state.movies.length).toEqual(3)
-  //   expect(state.movies[0]).toEqual(FIRST_MOVIE)
-  //   expect(state.movies[1]).toEqual(SECOND_MOVIE)
-  //   expect(state.movies[2]).toEqual(THIRD_MOVIE)
-  //   expect(state.found).toEqual(FOUND)
-  //   expect(state.loadIterator).toEqual(2)
-  // })
-
   test('update movie', () => {
     state = content(state, updateMovie(FIRST_UPDATED))
 

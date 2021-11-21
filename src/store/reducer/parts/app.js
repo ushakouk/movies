@@ -1,12 +1,12 @@
 import { ACTIONS } from '../../constants/constants';
 
 const initialState = {
-  isAuth: true,
+  isAuth: false,
   isLoading: false,
   notification: null
 }
 
-export const app = (state = initialState, action) => {
+export const app = (state = initialState, action = {}) => {
   switch (action.type) {
     case ACTIONS.LOGIN:
       return { ...state, isAuth: true }

@@ -29,14 +29,20 @@ function Home({ isLoading, notification, modal, modalMovie, loadIterator, found,
   
   useEffect(() => {
     const searchParams = parseParams();
+    actions.getMovies(searchQuery, defineGenre(searchParams), defineSort(searchParams))
+  }, [])
+
+  useEffect(() => {
+    const searchParams = parseParams();
     if (!shallowCompare(searchParams, params)) {
       setParams(searchParams);
     }
     if (!shallowCompare(searchQuery, query)) {
       setQuery(searchQuery)
     }
-    
-    actions.getMovies(searchQuery, defineGenre(searchParams), defineSort(searchParams))
+    if (params.sort !== searchParams.sort || params.genre !== searchParams.genre || searchQuery !== query) {
+      actions.getMovies(searchQuery, defineGenre(searchParams), defineSort(searchParams))
+    }
   }, [location]);
 
   function parseParams() {
