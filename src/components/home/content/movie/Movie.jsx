@@ -16,7 +16,7 @@ function Movie({ movie, editMovie, deleteMovie, showMovieDetails }) {
   }
 
   return (
-    <div className="movie_details" onClick={showDetails}>
+    <div className="movie_details" onClick={showDetails} role="movie">
       <img src={poster_path} className="image" onError={onError} />
       <div className="info_group">
         <div className="name">{title}</div>

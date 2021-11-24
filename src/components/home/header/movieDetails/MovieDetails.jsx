@@ -7,7 +7,7 @@ function MovieDetails({ movie }) {
   const { poster_path, title, vote_average, genres, release_date, runtime, overview } = movie;
 
   return (
-    <div className="movie-details">
+    <div className="movie-details" role="movie-details">
       <img src={poster_path} className="image" onError={(e) => { e.target.onerror = null; e.target.src = noImage }} />
       <div className="movie-details_block">
         <div className="details_row">

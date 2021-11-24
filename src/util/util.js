@@ -10,7 +10,7 @@ export function parseYear(date) {
 }
 
 export function defineGenre({ genre }) {
-  return (genre && GENRES.hasOwnProperty(genre)) ? GENRES[genre] : GENRES.ALL
+  return (genre && GENRES.hasOwnProperty(genre.toUpperCase())) ? GENRES[genre.toUpperCase()] : GENRES.ALL
 }
 
 export function defineSort({ sort }) {

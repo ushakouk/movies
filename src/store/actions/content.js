@@ -10,11 +10,6 @@ export const addMovies = (movies) => ({
   payload: movies
 })
 
-export const addMovie = (movie) => ({
-  type: ACTIONS.ADD_MOVIE,
-  payload: movie
-})
-
 export const updateMovie = (movie) => ({
   type: ACTIONS.UPDATE_MOVIE,
   payload: movie

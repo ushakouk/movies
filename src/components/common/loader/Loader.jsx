@@ -4,7 +4,7 @@ import './loader.scss';
 function Loader() {
   return (
     <div className="load-background">
-      <div className="loader"></div>
+      <div className="loader" role="loader"></div>
     </div>
   )
 };

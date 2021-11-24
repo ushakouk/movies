@@ -26,7 +26,7 @@ function Header({ movieId, closeMovieDetails, searchValue, setSearchValue, actio
       getMovieRequest(id).then((movie) => setState(movie))
     } else {
       setState(null)
-    }   
+    }
   }
 
   const setState = (movie) => {
@@ -34,12 +34,14 @@ function Header({ movieId, closeMovieDetails, searchValue, setSearchValue, actio
     setIsViewMode(movie && movie.id)
   }
 
+  const onAddMovie = () => addMovie()
+
   return (
     <div className="header">
       <Top
         isViewMode={isViewMode}
         closeViewMode={closeMovieDetails}
-        addMovie={addMovie}
+        addMovie={onAddMovie}
         logout={logout}
       />
       {isViewMode ?

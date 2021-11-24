@@ -5,7 +5,7 @@ const initialState = {
   movie: null
 }
 
-export const modal = (state = initialState, action) => {
+export const modal = (state = initialState, action = {}) => {
   switch (action.type) {
     case ACTIONS.CREATE_OR_EDIT_MOVIE_MODAL:
       return { ...state, modal: MODALS.CREATE_OR_EDIT_MOVIE, movie: action.payload }

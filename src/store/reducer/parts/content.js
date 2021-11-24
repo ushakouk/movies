@@ -6,7 +6,7 @@ const initialState = {
   loadIterator: 0
 }
 
-export const content = (state = initialState, action) => {
+export const content = (state = initialState, action = {}) => {
   switch (action.type) {
     case ACTIONS.SET_MOVIES:
       return { ...state, movies: action.payload.movies, found: action.payload.found, loadIterator: 1 }

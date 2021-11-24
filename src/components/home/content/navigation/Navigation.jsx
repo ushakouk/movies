@@ -6,7 +6,7 @@ import { GENRES, SORTES } from '../../../../store/constants/constants';
 
 function Navigation({ sort = SORTES.RELEASE_DATE.value, setSort, filter = GENRES.ALL, setFilter }) {
   return (
-    <div className="navigation">
+    <div className="navigation" role="navigation">
       {Object.values(GENRES).map((genre, index) =>
         <Selector key={index} name={genre} selected={filter} select={setFilter}/>
       )}
