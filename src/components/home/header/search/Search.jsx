@@ -5,7 +5,7 @@ import Button from '../../../common/button/Button';
 import Input from '../../../common/fields/input/Input';
 
 function Search({ initValue, search, reset }) {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(initValue);
 
   useEffect(() => {
     setValue(initValue ? initValue : "");

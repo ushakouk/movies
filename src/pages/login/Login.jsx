@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Dialog from '../common/dialog/Dialog';
-import Input from '../common/fields/input/Input';
-import Title from '../common/title/Title';
-import Button from '../common/button/Button';
+import Dialog from '../../components/common/dialog/Dialog';
+import Input from '../../components/common/fields/input/Input';
+import Title from '../../components/common/title/Title';
+import Button from '../../components/common/button/Button';
 import './login.scss';
 
 function Login({ login }) {

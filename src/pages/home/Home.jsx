@@ -7,26 +7,27 @@ import { submitMovie, submitRemoveMovie, getMovies, loadMoreMovies } from '../..
 import { MODALS, API } from '../../store/constants/constants';
 import { useParams, useLocation, useHistory } from "react-router-dom";
 import { defineGenre, defineSort, shallowCompare } from '../../util/util';
-import Header from './header/Header';
-import Content from './content/Content';
-import Footer from './footer/Footer';
-import EditMovie from './modal/EditMovie';
-import DeleteMovie from './modal/DeleteMovie';
-import Notification from '../common/notification/Notification';
-import Loader from '../common/loader/Loader';
-import Scrollable from '../common/scrollable/Scrollable';
+import Header from '../../components/home/header/Header';
+import Content from '../../components/home/content/Content';
+import Footer from '../../components/home/footer/Footer';
+import EditMovie from '../../components/home/modal/EditMovie';
+import DeleteMovie from '../../components/home/modal/DeleteMovie';
+import Notification from '../../components/common/notification/Notification';
+import Scrollable from '../../components/common/scrollable/Scrollable'
+import Loader from '../../components/common/loader/Loader';
+
 
 function Home({ isLoading, notification, modal, modalMovie, loadIterator, found, actions }) {
   const BASE_URL = '/search';
   const { closeModal, submitMovie, submitRemoveMovie, removeNotification } = actions;
 
-  let history = useHistory();
   let { searchQuery } = useParams();
   let location = useLocation();
-  
+  let history = useHistory();
+
   const [query, setQuery] = useState(searchQuery);
   const [params, setParams] = useState(parseParams());
-  
+
   useEffect(() => {
     const searchParams = parseParams();
     actions.getMovies(searchQuery, defineGenre(searchParams), defineSort(searchParams))
@@ -67,12 +68,11 @@ function Home({ isLoading, notification, modal, modalMovie, loadIterator, found,
     const path = (searchValue && searchValue !== null && searchValue.length > 0)
       ? `${BASE_URL}/${searchValue}`
       : BASE_URL;
-
     pushToHistory(path, location.search)
   }
 
   function pushToHistory(pathname, search) {
-    history.push({ pathname, search})
+    history.push({ pathname, search })
   }
 
   function onScroll(e) {
@@ -84,7 +84,7 @@ function Home({ isLoading, notification, modal, modalMovie, loadIterator, found,
     const downloaded = API.LOAD_LIMIT * loadIterator;
     if (rest < loadTrigger && found > downloaded) {
       actions.loadMoreMovies(query, params.genre, params.sort, loadIterator)
-    }    
+    }
   }
 
   const closeMovieDetails = () => setParam('movie', null)
