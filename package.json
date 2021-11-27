@@ -60,14 +60,12 @@
     "webpack-node-externals": "1.7.2"
   },
   "scripts": {
-    "start:prod": "webpack-dev-server --mode production --open --hot",
-    "start:dev": "webpack-dev-server --mode development --open --hot",
-    "build:prod": "webpack --mode production",
-    "build:dev": "webpack --mode development",
+    "build:prod": "cross-env NODE_ENV=production webpack --config ./webpack",
+    "start:prod": "cross-env NODE_ENV=production  node ./server",
+    "start:dev": "cross-env NODE_ENV=development node ./server",
     "test": "jest --env=jsdom",
     "test:coverage": "jest --coverage --collectCoverageFrom=src/**/*.{js,jsx} --env=jsdom",
-    "wdio": "wdio run ./wdio.conf.js",
-    "start": "cross-env NODE_ENV=development node ./server"
+    "wdio": "wdio run ./wdio.conf.js"
   },
   "jest": {
     "moduleNameMapper": {
