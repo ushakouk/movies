@@ -40,6 +40,6 @@ function shallowObjectCompare(a, b) {
     : true;
 }
 
-function equalIgnoreCase(a, b) {
+export function equalIgnoreCase(a, b) {
   return a.toLowerCase() === b.toLowerCase();
 }
