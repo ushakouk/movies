@@ -1,12 +1,12 @@
 import React from 'react';
-import './button.scss';
+import './button.css';
 
-const Button = ({children, style, ...props} ) => {
+const Button = ({text, style, ...props} ) => {
   const className = style ? "button " + style : "button";
 
   return (
     <button {...props} className={className}>
-      {children}
+      {text}
     </button>
   );
 };

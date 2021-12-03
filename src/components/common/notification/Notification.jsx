@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-import './notification.scss';
+import './notification.css';
 
 function Notification({ type, message, destroy }) {
 
