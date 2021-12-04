@@ -1,14 +1,8 @@
 import React from 'react';
 import './button.css';
+import { IButton } from '../../../types/types';
 
-interface ButtonProps {
-  id: string;
-  text: string;
-  style: string;
-  onClick: () => void;
-}
-
-const Button: React.FC<ButtonProps>  = ({id, text, style, onClick}) => {
+const Button: React.FC<IButton>  = ({id, text, style, onClick}) => {
   const className = style ? "button " + style : "button";
 
   return (

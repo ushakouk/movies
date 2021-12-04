@@ -1,4 +1,11 @@
-export interface IMovie {
+export interface IButton {
+  id: string;
+  text: string;
+  style: string;
+  onClick: () => void;
+}
+
+export interface Movie {
   id: string,
   poster_path: string,
   genres: string[],
@@ -6,8 +13,8 @@ export interface IMovie {
   release_date: string
 }
 
-export interface IMovieProps {
-  movie: IMovie,
+export interface IMovie {
+  movie: Movie,
   editMovie: (m: object) => void;
   deleteMovie: (m: object) => void;
   showMovieDetails: (m: string) => void;
@@ -16,11 +23,11 @@ export interface IMovieProps {
 export interface INavigation {
   sort: string, 
   setSort: (sort: string) => void,
-  filter: GENRES, 
-  setFilter: (genre: GENRES) => void,
+  filter: GENRE, 
+  setFilter: (genre: GENRE) => void,
 }
 
-export enum GENRES {
+export enum GENRE {
   ALL = 'ALL',
   DOCUMENTARY = 'DOCUMENTARY',
   COMEDY = 'COMEDY',
@@ -28,7 +35,7 @@ export enum GENRES {
   CRIME = 'CRIME'
 }
 
-export interface ISort {
+export interface Sort {
   name: string,
   value: string
 }
