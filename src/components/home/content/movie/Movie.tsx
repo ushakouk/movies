@@ -2,9 +2,10 @@ import React from 'react';
 import ContextMenu from './contextMenu/ContextMenu';
 import noImage from '../../../../img/no_image.png';
 import { parseYear } from '../../../../util/util';
+import { IMovie } from '../../../../types/types';
 import './movie.scss';
 
-function Movie({ movie, editMovie, deleteMovie, showMovieDetails }) {
+const Movie: React.FC<IMovie> = ({ movie, editMovie, deleteMovie, showMovieDetails }) => {
   const { id, poster_path, genres, title, release_date } = movie;
 
   const onDelete = () => deleteMovie(movie)

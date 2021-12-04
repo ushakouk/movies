@@ -45,7 +45,7 @@ export function updateMoviesRequest(movie) {
 export function removeMovieRequest(id) {
    return new Promise((resolve, reject) =>
       axios.delete(`http://localhost:4000/movies/${id}`)
-         .then((resp) => resolve())
+         .then(() => resolve())
          .catch((err) => reject(err))
    );
 }

@@ -11,6 +11,6 @@ function Dialog({ children, close, style }) {
       </div>
     </div>
   );
-};
+}
 
 export default Dialog;

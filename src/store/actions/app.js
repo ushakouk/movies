@@ -1,6 +1,6 @@
 import { ACTIONS } from '../constants/constants';
 
-export const login = (username, password) => ({
+export const login = () => ({
   type: ACTIONS.LOGIN
 })
 

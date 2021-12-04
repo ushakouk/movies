@@ -5,7 +5,7 @@ import Button from '../../../common/button/Button';
 import Input from '../../../common/fields/input/Input';
 
 function Search({ initValue, search, reset }) {
-  const [value, setValue] = useState(initValue);
+  const [value, setValue] = useState("");
 
   useEffect(() => {
     setValue(initValue ? initValue : "");
@@ -23,8 +23,8 @@ function Search({ initValue, search, reset }) {
           placeholder="What do you want to watch"
           onChange={e => setValue(e.target.value)}
         />
-        <Button id="submit-search" style="primary" onClick={() => search(value)}>SEARCH</Button>
-        <Button id="submit-reset-search" style={`negative ${!initValue && 'hidden'}`} onClick={reset}>RESET</Button>
+        <Button id="submit-search" text="SEARCH" style="primary" onClick={() => search(value)} />
+        <Button id="submit-reset-search" text="RESET" style={`negative ${!initValue && 'hidden'}`} onClick={reset} />
       </div>
     </div>
   )

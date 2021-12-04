@@ -1,5 +1,5 @@
 import React from 'react';
-import './loader.scss';
+import './loader.css';
 
 function Loader() {
   return (
@@ -7,6 +7,6 @@ function Loader() {
       <div className="loader" role="loader"></div>
     </div>
   )
-};
+}
 
 export default Loader;

@@ -14,7 +14,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
     alias: {
       'react-dom': '@hot-loader/react-dom',
     },
@@ -23,9 +23,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.j?t?sx?$/,
         exclude: /node_modules/,
-        use: 'babel-loader',
+        use: ["babel-loader", "eslint-loader"]
       },
       {
         test: /\.s?css$/,
