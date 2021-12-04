@@ -9,11 +9,11 @@ function Top({ isViewMode, closeViewMode, addMovie, logout }) {
       <Logo />
       <div className="top__buttons">
         {isViewMode ?
-          <Button style="search-icon" role="toSearchMode" onClick={closeViewMode}></Button>
+          <Button style="search-icon" role="toSearchMode" onClick={closeViewMode} />
           :
           <React.Fragment>
-            <Button style="negative small" onClick={logout}>LOG OUT</Button>
-            <Button style="small" onClick={addMovie}>+ ADD MOVIE</Button>
+            <Button text="LOG OUT" style="negative small" onClick={logout} />
+            <Button text="+ ADD MOVIE" style="small" onClick={addMovie} />
           </React.Fragment>}
       </div>
     </div>

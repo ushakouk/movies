@@ -49,7 +49,7 @@ const submitUpdateMovie = (movie) => (dispatch) => {
 }
 
 const submitCreateMovie = (movie) => (dispatch) => {
-  createMoviesRequest(movie).then(resp => {
+  createMoviesRequest(movie).then(() => {
     dispatch(closeModal())
     dispatch(setIsLoading(false))
     dispatch(setNotification(NOTIFICATIONS.TYPES.SUCCESS, NOTIFICATIONS.MESSAGES.MOVIE_CREATED))

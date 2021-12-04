@@ -7,6 +7,6 @@ function Loader() {
       <div className="loader" role="loader"></div>
     </div>
   )
-};
+}
 
 export default Loader;

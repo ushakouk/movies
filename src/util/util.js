@@ -10,7 +10,7 @@ export function parseYear(date) {
 }
 
 export function defineGenre({ genre }) {
-  return (genre && GENRES.hasOwnProperty(genre.toUpperCase())) ? GENRES[genre.toUpperCase()] : GENRES.ALL
+  return (genre && GENRES[genre.toUpperCase()]) ? GENRES[genre.toUpperCase()] : GENRES.ALL
 }
 
 export function defineSort({ sort }) {
@@ -35,7 +35,7 @@ function shallowObjectCompare(a, b) {
   return a === b &&
     a !== null
     ? Object.entries(a).every(([key, value]) =>
-      b.hasOwnProperty(key)
+      b[key] != null 
       && shallowCompare(value, b.valueOf(key)))
     : true;
 }
